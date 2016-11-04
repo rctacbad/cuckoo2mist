@@ -33,11 +33,14 @@ import time
 import hashlib
 import xml.etree.ElementTree as ET
 import glob
+import argparse
 
 from cuckoo2mist.thread_mist import th_seq2mist
 
 max_threads	= 10
 user_interrupt	= False
+
+CONF_FOLDER = "conf"
 
 class Usage(Exception):
 	def __init__(self, msg):
@@ -94,29 +97,18 @@ def generate_Mist_Reports(files, e2m, t2m):
 
 
 def main(argv=None):
-	if argv is None:
-		argv = sys.argv
 	try:
-		try:
-			opts, args = getopt.getopt(argv[1:], "hcio:v", ["help", "config_dir=", "input="])
-		except getopt.error, msg:
-			raise Usage(msg)
-			
-		workdir = sys.path[0]
-		os.chdir(workdir)
-		
-		f_configdir = "conf"
-		
-		# option processing
-		for option, value in opts:
-			if option == "-v":
-				verbose = True
-			if option in ("-h", "--help"):
-				raise Usage(help_message)
-			if option in ("-o", "--config"):
-				f_configdir = value
-			if option in ("-i", "--input"):
-				f_input = value
+		opt = argparse.ArgumentParser(description="Convert Cuckoo logs into MIST reports")
+		opt.add_argument("-o", "--config", action="store_true", help="Specify MIST conversion config files")
+		opt.add_argument("-i", "--input", action="store", dest="folder", help="Folder path of Cuckoo logs")
+		if len(sys.argv) < 2:
+			opt.print_help()
+			sys.exit()
+		options = opt.parse_args()
+		if options.config:
+			f_configdir = CONF_FOLDER
+		if options.folder:
+			f_input = options.folder
 				
 		print "Reading configuration files from %s ..." % (f_configdir), 
 		(e2m, t2m) = read_configuration(f_configdir)
