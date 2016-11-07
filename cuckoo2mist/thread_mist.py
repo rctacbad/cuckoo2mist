@@ -31,6 +31,7 @@ import subprocess
 from class_mist import mistit
 import gzip
 
+import xml.etree.cElementTree as ET
 from constants import *
 
 class th_seq2mist(Thread):
@@ -53,7 +54,7 @@ class th_seq2mist(Thread):
 		hfile.close()
 
 	def run(self):
-		mist = mistit(self.input_file, self.elements2mist, self.types2mist)
+		mist = mistit(self.input_file)
 		if mist.parse() and mist.convert():
 			mist.write(self.output_file)
 #			if len(mist.errormsg) > 0:
