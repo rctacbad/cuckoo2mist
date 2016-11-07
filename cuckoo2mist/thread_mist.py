@@ -31,6 +31,8 @@ import subprocess
 from class_mist import mistit
 import gzip
 
+from constants import *
+
 class th_seq2mist(Thread):
 	"""This thread converts a new sectional XML report in a MIST report"""
 
@@ -38,8 +40,8 @@ class th_seq2mist(Thread):
 		Thread.__init__(self)
 		self.input_file = input_file
 		(froot, fext) = os.path.splitext(self.input_file)
-		self.elements2mist = elements2mist
-		self.types2mist = types2mist
+		self.elements2mist = ET.ElementTree().parse(os.path.join(CONF_FOLDER, CONF_ELEM2MIST)) # attempt to make config non-user dependent
+		self.types2mist = ET.ElementTree().parse(os.path.join(CONF_FOLDER, CONF_TYPES2MIST)) # attempt to make config non-user dependent
 		self.analysis_id = analysis_id
 		self.output_file = froot + ".mist"
 
