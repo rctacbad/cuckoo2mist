@@ -33,10 +33,11 @@ from cStringIO import StringIO
 import gzip
 import json
 
+from constants import *
 
 class mistit(object):
 
-	def __init__(self, input_file, elements2mist, types2mist):
+	def __init__(self, input_file):
 		self.infile = input_file
 		print 'Generating MIST report for "%s"...' % self.infile
 		self.skiplist = []
@@ -44,8 +45,8 @@ class mistit(object):
 		self.ip_pattern = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
 		self.errormsg = ''
 		self.mist = StringIO()
-		self.elements2mist = elements2mist
-		self.types2mist = types2mist
+		self.elements2mist = os.path.join(CONF_FOLDER, CONF_ELEM2MIST) # attempt to make config non-user dependent
+		self.types2mist = os.path.join(CONF_FOLDER, CONF_TYPES2MIST) # attempt to make config non-user dependent
 		self.cache = {}
 		self.missing = {}
 		self.behaviour_report = ''
@@ -235,9 +236,10 @@ class mistit(object):
 
 
 if __name__ == '__main__':
-        elements2mist.parse("conf/cuckoo_elements2mist_leveled.xml")
+        elements2mist = ET.ElementTree()
+        elements2mist.parse(os.path.join(CONF_FOLDER, CONF_ELEM2MIST))
         types2mist = ET.ElementTree()
-        types2mist.parse("conf/cuckoo_types2mist.xml")
+        types2mist.parse(os.path.join(CONF_FOLDER, CONF_TYPES2MIST))
 
 	x = mistit('reports/report.json', elements2mist, types2mist)
 	if x.parse() and x.convert():

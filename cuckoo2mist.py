@@ -36,11 +36,10 @@ import glob
 import argparse
 
 from cuckoo2mist.thread_mist import th_seq2mist
+from constants import *
 
 max_threads	= 10
 user_interrupt	= False
-
-CONF_FOLDER = "conf"
 
 class Usage(Exception):
 	def __init__(self, msg):
@@ -58,10 +57,10 @@ def get_log_md5s():
 
 def read_configuration(fconfigdir):
 	elements2mist = ET.ElementTree()
-	elements2mist.parse(os.path.join(fconfigdir, "cuckoo_elements2mist.xml"))
+	elements2mist.parse(os.path.join(fconfigdir, CONF_ELEM2MIST))
 
 	types2mist = ET.ElementTree()
-	types2mist.parse(os.path.join(fconfigdir, "cuckoo_types2mist.xml"))	
+	types2mist.parse(os.path.join(fconfigdir, CONF_TYPES2MIST))	
 	return elements2mist, types2mist
 
 def generate_Mist_Reports(files, e2m, t2m):
