@@ -45,8 +45,8 @@ class mistit(object):
 		self.ip_pattern = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
 		self.errormsg = ''
 		self.mist = StringIO()
-		self.elements2mist = os.path.join(CONF_FOLDER, CONF_ELEM2MIST) # attempt to make config non-user dependent
-		self.types2mist = os.path.join(CONF_FOLDER, CONF_TYPES2MIST) # attempt to make config non-user dependent
+		self.elements2mist = ET.ElementTree().parse(os.path.join(CONF_FOLDER, CONF_ELEM2MIST)) # attempt to make config non-user dependent
+		self.types2mist = ET.ElementTree().parse(os.path.join(CONF_FOLDER, CONF_TYPES2MIST)) # attempt to make config non-user dependent
 		self.cache = {}
 		self.missing = {}
 		self.behaviour_report = ''
