@@ -173,6 +173,7 @@ class mistit(object):
 			if not 3 == 4: #operation_node.tag in self.skiplist:
 				values = ""
 				category_node = self.elements2mist.find(".//" + category)
+				print category_node
 				if category_node == None:
 					self.missing[category] = 1
 					continue
