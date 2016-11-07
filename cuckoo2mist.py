@@ -99,16 +99,17 @@ def generate_Mist_Reports(files, e2m, t2m):
 def main(argv=None):
 	try:
 		opt = argparse.ArgumentParser(description="Convert Cuckoo logs into MIST reports")
-		opt.add_argument("-o", "--config", action="store_true", help="Specify MIST conversion config files")
 		opt.add_argument("-i", "--input", action="store", dest="folder", help="Folder path of Cuckoo logs")
 		if len(sys.argv) < 2:
 			opt.print_help()
 			sys.exit()
 		options = opt.parse_args()
-		if options.config:
-			f_configdir = CONF_FOLDER
 		if options.folder:
+                        f_configdir = CONF_FOLDER
 			f_input = options.folder
+		else:
+                        opt.print_help()
+                        sys.exit()
 				
 		print "Reading configuration files from %s ..." % (f_configdir), 
 		(e2m, t2m) = read_configuration(f_configdir)
