@@ -180,6 +180,7 @@ class mistit(object):
 				translate_node = self.elements2mist.find(".//" + api)
 				if not translate_node:
 					self.missing[api] = 1
+					self.mist.write( '\n' )
 					continue
 				self.mist.write( translate_node.attrib["mist"] + " |" )
 				for attrib_node in translate_node.getchildren():
