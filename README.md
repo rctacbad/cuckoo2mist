@@ -3,13 +3,11 @@ About
 This repository is a fork of http://sourceforge.net/p/cuckoo2mist/
 Its original author is Philipp Trinius.
 
-This fork aims at being easier to use and deploy, eventually it will be
-submitted upstream.
-
-Original description :
+Original description 
+=====================
 The Malware Instruction Set (MIST) is a representation for monitored behavior
 of malicious software. The representation is optimized for effective and
-efficient analysis of behavior using data mining and machine learn- ing
+efficient analysis of behavior using data mining and machine learning
 techniques. It can be obtained automatically during analysis of malware with a
 behavior monitoring tool or by converting existing behavior reports. The
 representation is not restricted to a particular monitoring tool and thus can
