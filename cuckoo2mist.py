@@ -99,6 +99,7 @@ def main(argv=None):
 	try:
 		opt = argparse.ArgumentParser(description="Convert Cuckoo logs into MIST reports")
 		opt.add_argument("-i", "--input", action="store", dest="folder", help="Folder path of Cuckoo logs")
+		opt.add_argument("-t", "--taskids", action="store_true", help="Convert JSON logs, by task_id, into MIST format")
 		if len(sys.argv) < 2:
 			opt.print_help()
 			sys.exit()
@@ -106,6 +107,15 @@ def main(argv=None):
 		if options.folder:
                         f_configdir = CONF_FOLDER
 			f_input = options.folder
+                elif options.taskids:
+                        try:
+                                from scripts.convert_json import process_tasks
+
+                                process_tasks()
+                        except Exception as e:
+                                print "Script import error\n"
+                                print e
+                                sys.exit()
 		else:
                         opt.print_help()
                         sys.exit()
