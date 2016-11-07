@@ -187,7 +187,7 @@ class mistit(object):
                                                 for arg in api_call["arguments"]:
                                                         if arg["name"] == attrib_node.tag:
                                                                 value = self.convertValue(attrib_node.attrib["type"], arg["value"], attrib_node.tag)
-					self.mist.write( " " + value )
+                                                self.mist.write( " " + value )
 				self.mist.write( '\n' )
 		return True
 	
