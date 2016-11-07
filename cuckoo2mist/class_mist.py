@@ -173,13 +173,12 @@ class mistit(object):
 			if not 3 == 4: #operation_node.tag in self.skiplist:
 				values = ""
 				category_node = self.elements2mist.find(".//" + category)
-				print category_node
-				if category_node == None:
+				if not category_node:
 					self.missing[category] = 1
 					continue
 				self.mist.write( category_node.attrib["mist"] + " " )
 				translate_node = self.elements2mist.find(".//" + api)
-				if translate_node == None:
+				if not translate_node:
 					self.missing[api] = 1
 					continue
 				self.mist.write( translate_node.attrib["mist"] + " |" )
@@ -237,12 +236,14 @@ class mistit(object):
 
 
 if __name__ == '__main__':
-        elements2mist = ET.ElementTree()
-        elements2mist.parse(os.path.join(CONF_FOLDER, CONF_ELEM2MIST))
-        types2mist = ET.ElementTree()
-        types2mist.parse(os.path.join(CONF_FOLDER, CONF_TYPES2MIST))
-
-	x = mistit('reports/report.json', elements2mist, types2mist)
+##        elements2mist = ET.ElementTree()
+##        elements2mist.parse(os.path.join(CONF_FOLDER, CONF_ELEM2MIST))
+##        types2mist = ET.ElementTree()
+##        types2mist.parse(os.path.join(CONF_FOLDER, CONF_TYPES2MIST))
+##
+##	x = mistit('reports/report.json', elements2mist, types2mist)
+        
+        x = mistit('reports/report.json')
 	if x.parse() and x.convert():
 		x.write('report/report.mist')
 	else:
