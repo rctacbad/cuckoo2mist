@@ -77,6 +77,16 @@
 			<ClassName type="type_string"/>
  			<WindowName type="type_string"/>
 		</FindWindowW>
+		
+		<CreateWindowExA mist="05">
+			<ClassName type="type_string"/>
+ 			<WindowName type="type_string"/>
+		</CreateWindowExA>
+		
+		<CreateWindowExW mist="06">
+			<ClassName type="type_string"/>
+ 			<WindowName type="type_string"/>
+		</CreateWindowExW>
 
 	</windows>
  
@@ -125,6 +135,18 @@
 			<SuspendCount type="type_integer"/>
  			<ThreadHandle type="type_hex"/>
 		</NtResumeThread>
+		
+		<NtOpenThread mist="09">
+			<DesiredAccess type="type_integer"/>
+ 			<ThreadId type="type_integer"/>
+		</NtOpenThread>
+		
+		<NtCreateThreadEx mist="0a">
+			<StartRoutine type="type_hex"/>
+ 			<Parameter type="type_hex"/>
+ 			<CreationFlags type="type_integer"/>
+ 			<ThreadId type="type_integer"/>
+		</NtCreateThreadEx>
 		
 
 	</threading>
@@ -195,6 +217,26 @@
  			<ProcessHandle type="type_hex"/>
  			<Address type="type_hex"/>
 		</VirtualProtectEx>
+		
+		<NtOpenProcess mist="0b">
+			<DesiredAccess type="type_integer"/>
+ 			<ProcessId type="type_integer"/>
+		</NtOpenProcess>
+		
+		<TerminateProcess mist="0c">
+			<ProcessHandle type="type_hex"/>
+ 			<ExitCode type="type_integer"/>
+		</TerminateProcess>
+		
+		<ShellExecuteExW mist="0d">
+			<ProcessHandle type="type_hex"/>
+ 			<FileName type="type_string"/>
+		</ShellExecuteExW>
+		
+		<ShellExecuteExA mist="0e">
+			<ProcessHandle type="type_hex"/>
+ 			<FileName type="type_string"/>
+		</ShellExecuteExA>
 	
 	</process>
 	
@@ -437,6 +479,25 @@
 			<DesiredAccess type="type_integer"/>
  			<KeyHandle type="type_hex"/>
 		</NtOpenKey>
+		
+		<RegDeleteValueW mist="13">	
+			<Handle type="type_hex"/>
+ 			<ValueName type="type_string"/>
+		</RegDeleteValueW>
+		
+		<NtQueryValueKey mist="14">
+			<Buffer type="type_hex"/>
+ 			<Type type="type_integer"/>
+ 			<Handle type="type_hex"/>
+ 			<ValueName type="type_string"/>
+		</NtQueryValueKey>
+		
+		<NtSetValueKey mist="15">
+			<Buffer type="type_hex"/>
+ 			<Type type="type_integer"/>
+ 			<Handle type="type_hex"/>
+ 			<ValueName type="type_string"/>
+		</NtSetValueKey>
         
 	</registry>
 
@@ -479,6 +540,27 @@
 			<Buffer type="type_hex"/>
  			<FileHandle type="type_hex"/>
 		</NtWriteFile>
+		
+		<DeleteFileA mist="08">
+			<FileName type="type_string"/>
+		</DeleteFileA>
+		
+		<CopyFileExW mist="09">
+			<ExistingFileName type="type_string"/>
+ 			<NewFileName type="type_string"/>
+		</CopyFileExW>
+		
+		<FindFirstFileExW mist="0a">
+			<FileName type="type_string"/>
+		</FindFirstFileExW>
+		
+		<FindFirstFileExA mist="0b">
+			<FileName type="type_string"/>
+		</FindFirstFileExA>
+		
+		<FindNextFile mist="0c">
+ 			<FileHandle type="type_hex"/>
+		</FindNextFile>
 
 	</filesystem>
 
