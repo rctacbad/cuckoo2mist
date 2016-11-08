@@ -51,6 +51,10 @@
 			<URL type="type_string"/>
 			<FileName type="type_string"/>
 		</URLDownloadToFileW>
+		
+		<WSAStartup mist="06">
+            <VersionRequested type="type_hex"/>
+        </WSAStartup>
  	
 	</network>
 
@@ -596,10 +600,5 @@
         </NtAllocateVirtualMemory>
         
     </memory>
-<!-- ================================ socket ==================================-->
-    <socket mist="0d">
-        <WSAStartup mist="01">
-            <VersionRequested type="type_hex"/>
-        </WSAStartup>
-    </socket>
+
 </elements2mist>
