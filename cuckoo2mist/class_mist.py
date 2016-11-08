@@ -190,6 +190,33 @@ class mistit(object):
                                                 self.mist.write( " " + value )
 				self.mist.write( '\n' )
 		return True
+
+	def convert_proc(self, pid, api_calls):
+		self.mist.write( '# process ' + str(pid) + ' #\n' )
+		for api_call in api_calls:
+			arguments 	= api_call['arguments']
+			category 	= api_call['category']
+			api 		= api_call['api']
+			if not 3 == 4: #operation_node.tag in self.skiplist:
+				values = ""
+				category_node = self.elements2mist.find(".//" + category)
+				if not category_node:
+					self.missing[category] = 1
+					continue
+				translate_node = self.elements2mist.find(".//" + api)
+				if not translate_node:
+					self.missing[api] = 1
+					continue
+				if category_node and translate_node:
+					self.mist.write( category_node.attrib["mist"] + " " + translate_node.attrib["mist"] + " |" )
+                                        for attrib_node in translate_node.getchildren():
+                                                value = self.types2mist.find(attrib_node.attrib["type"]).attrib["default"]
+                                                for arg in api_call["arguments"]:
+                                                        if arg["name"] == attrib_node.tag:
+                                                                value = self.convertValue(attrib_node.attrib["type"], arg["value"], attrib_node.tag)
+                                                self.mist.write( " " + value )
+				self.mist.write( '\n' )
+		return True	
 	
 	def convertValue(self, ttype, value, name):
 		result = 'QQQQQQQQ' + value
@@ -203,7 +230,7 @@ class mistit(object):
 			result = self.int2hex(value, 8)
 		return result
 
-	
+	'''
 	def convert(self):
 		processes = {}
 		procs = self.behaviour_report['behavior']['processes']
@@ -233,7 +260,17 @@ class mistit(object):
 			self.errormsg = "Warning: %s - %s not in elements2mist." % (self.infile, ", ".join(self.missing.keys()))
 
 		return True
+        '''
+        def convert(self):
+                procs = self.behaviour_report['behavior']['processes']
+                for proc in procs:
+                        self.convert_proc(proc['process_id'], proc['calls'])
 
+		if len(self.missing.keys()) > 0:
+			self.errormsg = "Warning: %s - %s not in elements2mist." % (self.infile, ", ".join(self.missing.keys()))
+
+		return True                        
+                                        
 
 if __name__ == '__main__':
 ##        elements2mist = ET.ElementTree()
@@ -244,7 +281,7 @@ if __name__ == '__main__':
 ##	x = mistit('reports/report.json', elements2mist, types2mist)
         
         x = mistit('reports/report.json')
-	if x.parse() and x.convert():
+	if x.parse() and x.convert2():
 		x.write('report/report.mist')
 	else:
 		print x.errormsg
