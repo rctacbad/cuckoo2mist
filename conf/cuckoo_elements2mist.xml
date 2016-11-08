@@ -156,7 +156,7 @@
 	<process mist="05">
 		
 		<NtWriteVirtualMemory mist="01">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<BaseAddress type="type_hex"/>
  			<ProcessHandle type="type_hex"/>
 		</NtWriteVirtualMemory>
@@ -167,7 +167,7 @@
 		</TerminateProcess>
  		
 		<NtReadVirtualMemory mist="03">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<BaseAddress type="type_hex"/>
  			<ProcessHandle type="type_hex"/>
 		</NtReadVirtualMemory>
@@ -396,14 +396,14 @@
 		</RegDeleteKeyW>
  		
 		<RegSetValueExW mist="06">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<Type type="type_integer"/>
  			<Handle type="type_hex"/>
  			<ValueName type="type_string"/>
 		</RegSetValueExW>
  		
 		<RegQueryValueExA mist="07">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<Type type="type_integer"/>
  			<Handle type="type_hex"/>
  			<ValueName type="type_string"/>
@@ -423,7 +423,7 @@
 		</RegOpenKeyExW>
  		
 		<RegSetValueExA mist="0a">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<Type type="type_integer"/>
  			<Handle type="type_hex"/>
  			<ValueName type="type_string"/>
@@ -469,7 +469,7 @@
 		</RegEnumKeyExA>
  		
 		<RegQueryValueExW mist="11">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<Type type="type_integer"/>
  			<Handle type="type_hex"/>
  			<ValueName type="type_string"/>
@@ -486,14 +486,14 @@
 		</RegDeleteValueW>
 		
 		<NtQueryValueKey mist="14">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<Type type="type_integer"/>
  			<Handle type="type_hex"/>
  			<ValueName type="type_string"/>
 		</NtQueryValueKey>
 		
 		<NtSetValueKey mist="15">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<Type type="type_integer"/>
  			<Handle type="type_hex"/>
  			<ValueName type="type_string"/>
@@ -524,7 +524,7 @@
 		</NtCreateFile>
 	
 		<NtReadFile mist="04">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<FileHandle type="type_hex"/>	
 		</NtReadFile>
 	
@@ -537,7 +537,7 @@
 		</DeleteFileW>
 	
 		<NtWriteFile mist="07">
-			<Buffer type="type_hex"/>
+			<Buffer type="type_string"/>
  			<FileHandle type="type_hex"/>
 		</NtWriteFile>
 		
@@ -570,7 +570,7 @@
 		
 		<DeviceIoControl mist="01">
 			<DeviceHandle type="type_hex"/>
- 			<OutBuffer type="type_hex"/>
+ 			<OutBuffer type="type_string"/>
  			<IoControlCode type="type_integer"/>
  			<InBuffer type="type_hex"/>
 		</DeviceIoControl>

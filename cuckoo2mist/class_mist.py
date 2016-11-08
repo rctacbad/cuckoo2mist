@@ -176,18 +176,18 @@ class mistit(object):
 				if not category_node:
 					self.missing[category] = 1
 					continue
-				self.mist.write( category_node.attrib["mist"] + " " )
 				translate_node = self.elements2mist.find(".//" + api)
 				if not translate_node:
 					self.missing[api] = 1
 					continue
-				self.mist.write( translate_node.attrib["mist"] + " |" )
-				for attrib_node in translate_node.getchildren():
-					value = self.types2mist.find(attrib_node.attrib["type"]).attrib["default"]
-					for arg in api_call["arguments"]:
-						if arg["name"] == attrib_node.tag:
-							value = self.convertValue(attrib_node.attrib["type"], arg["value"], attrib_node.tag)
-					self.mist.write( " " + value )
+				if category_node and translate_node:
+					self.mist.write( category_node.attrib["mist"] + " " + translate_node.attrib["mist"] + " |" )
+                                        for attrib_node in translate_node.getchildren():
+                                                value = self.types2mist.find(attrib_node.attrib["type"]).attrib["default"]
+                                                for arg in api_call["arguments"]:
+                                                        if arg["name"] == attrib_node.tag:
+                                                                value = self.convertValue(attrib_node.attrib["type"], arg["value"], attrib_node.tag)
+                                                self.mist.write( " " + value )
 				self.mist.write( '\n' )
 		return True
 	
