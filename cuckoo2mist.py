@@ -99,49 +99,61 @@ def main(argv=None):
 	try:
 		opt = argparse.ArgumentParser(description="Convert Cuckoo logs into MIST reports")
 		opt.add_argument("-i", "--input", action="store", dest="folder", help="Folder path of Cuckoo logs")
-		opt.add_argument("-t", "--taskids", action="store_true", help="Convert JSON logs, by task_id, into MIST format")
+		opt.add_argument("-t", "--taskids", action="append", nargs=3, metavar=("run_folder", "start", "end"), help="Convert JSON logs, by task_id and run, into MIST format. specify START and END task ids")
+		opt.add_argument("--clean", action="store_true", help="Remove all existing .mist files in reports folder")
 		if len(sys.argv) < 2:
 			opt.print_help()
 			sys.exit()
 		options = opt.parse_args()
+		f_configdir = CONF_FOLDER
 		if options.folder:
-                        f_configdir = CONF_FOLDER
 			f_input = options.folder
+
+                        print "Reading configuration files from %s ..." % (f_configdir), 
+                        (e2m, t2m) = read_configuration(f_configdir)
+                        print " done."
+                        
+                        log_md5s_before = get_log_md5s()
+                        
+                        print "Reading %s" % (f_input),
+                        files = []
+                        if os.path.exists(f_input):
+                                for ffile in os.listdir(f_input):
+                                        file = os.path.join(f_input, ffile)
+                                        if os.path.isfile(file) and file.endswith(".json"):
+                                                files.append(file)
+                                                print ".",
+                        if len(files) == 0:
+                                # no reports found
+                                print "No reports found."
+                                sys.exit(1)
+                        else:
+                                print " done."
+                                
+                        generate_Mist_Reports(files, e2m, t2m)
+                        
                 elif options.taskids:
+                        run_folder = options.taskids[-1][0]
+                        start = options.taskids[-1][1]
+                        end = options.taskids[-1][2]
+                        print run_folder, start, end
                         try:
                                 from scripts.convert_json import process_tasks
 
-                                process_tasks()
+                                process_tasks(ALL_ANALYSES, run_folder, start, end)
                         except Exception as e:
                                 print "Script import error\n"
                                 print e
                                 sys.exit()
+
+                elif options.clean:
+                        for mist in glob.glob("reports/*.mist"):
+                                print "Deleting {} ...".format(mist)
+                                os.remove(mist)
 		else:
                         opt.print_help()
                         sys.exit()
-				
-		print "Reading configuration files from %s ..." % (f_configdir), 
-		(e2m, t2m) = read_configuration(f_configdir)
-		print " done."
-		
-		log_md5s_before = get_log_md5s()
-		
-		print "Reading %s" % (f_input),
-		files = []
-		if os.path.exists(f_input):
-			for ffile in os.listdir(f_input):
-				file = os.path.join(f_input, ffile)
-				if os.path.isfile(file) and file.endswith(".json"):
-					files.append(file)
-					print ".",
-		if len(files) == 0:
-			# no reports found
-			print "No reports found."
-			sys.exit(1)
-		else:
-			print " done."
-			
-		generate_Mist_Reports(files, e2m, t2m)
+
 							
 	except Usage, err:
 		print >> sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg)
