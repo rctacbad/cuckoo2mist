@@ -100,6 +100,7 @@ def main(argv=None):
 		opt = argparse.ArgumentParser(description="Convert Cuckoo logs into MIST reports")
 		opt.add_argument("-i", "--input", action="store", dest="folder", help="Folder path of Cuckoo logs")
 		opt.add_argument("-t", "--taskids", action="append", nargs=3, metavar=("run_folder", "start", "end"), help="Convert JSON logs, by task_id and run, into MIST format. specify START and END task ids")
+		opt.add_argument("--clean", action="store_true", help="Remove all existing .mist files in reports folder")
 		if len(sys.argv) < 2:
 			opt.print_help()
 			sys.exit()
@@ -139,11 +140,16 @@ def main(argv=None):
                         try:
                                 from scripts.convert_json import process_tasks
 
-                                process_tasks(ALL_ANALYSES, str(run_folder), int(start), int(end))
+                                process_tasks(ALL_ANALYSES, run_folder, start, end)
                         except Exception as e:
                                 print "Script import error\n"
                                 print e
                                 sys.exit()
+
+                elif options.clean:
+                        for mist in glob.glob("reports/*.mist"):
+                                print "Deleting {} ...".format(mist)
+                                os.remove(mist)
 		else:
                         opt.print_help()
                         sys.exit()
